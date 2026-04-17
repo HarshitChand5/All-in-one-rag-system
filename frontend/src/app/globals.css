@@ -1,0 +1,151 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-inter);
+
+  --color-primary-foreground: #ffffff;
+  --color-primary: var(--accent-primary);
+  --color-secondary-foreground: var(--text-primary);
+  --color-secondary: var(--bg-secondary);
+  --color-muted-foreground: var(--text-muted);
+  --color-muted: var(--bg-secondary);
+  --color-accent-foreground: #ffffff;
+  --color-accent: var(--accent-primary);
+  --color-destructive-foreground: #ffffff;
+  --color-destructive: #ff453a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-input: rgba(255, 255, 255, 0.06);
+  --color-ring: var(--accent-primary);
+  --radius-lg: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #1d1d1f;
+  --bg-tertiary: #2d2d2f;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --accent-primary: #7c3aed;
+  --accent-secondary: #a78bfa;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-muted: #86868b;
+
+  --background: 0 0% 0%;
+  --foreground: 0 0% 96%;
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 96%;
+  --popover: 0 0% 7%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 263 70% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 54%;
+  --accent: 0 0% 12%;
+  --accent-foreground: 0 0% 96%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --ring: 263 70% 50%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+
+  html,
+  body {
+    height: 100%;
+    @apply selection:bg-violet-500/30 selection:text-white;
+  }
+
+  * {
+    @apply border-border/50;
+  }
+
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    letter-spacing: -0.011em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight text-white;
+  }
+}
+
+/* Clean card styles */
+
+@utility premium-gradient-text {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #c084fc, #818cf8);
+}
+
+/* Apple-style card */
+.apple-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+}
+
+.apple-card:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Glassmorphism card for PDF editor */
+.glass-morphism {
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Subtle background gradient */
+@keyframes subtle-shift {
+  0% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}

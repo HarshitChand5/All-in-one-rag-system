@@ -55,6 +55,7 @@ htmlcov/
 
 # Uploads / Data
 backend/uploads/
+backend/models/
 backend/data/
 *.db
 *.sqlite3
