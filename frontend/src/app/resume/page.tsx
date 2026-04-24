@@ -12,6 +12,8 @@ import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -332,7 +334,34 @@ export default function ResumeAnalyzerPage() {
                 )}
                 {messages.map(msg => (
                   <div key={msg.id} className={cn("max-w-[90%] rounded-xl px-3 py-2 text-[13px]", msg.role === 'user' ? "bg-violet-600 text-white ml-auto" : "bg-white/[0.06] text-[#e5e5ea]")}>
-                    {msg.content}
+                    {msg.role === 'user' ? (
+                      msg.content
+                    ) : (
+                      <div className="text-[13px] leading-relaxed">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                            ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+                            ol: ({node, ...props}) => <ol className="list-decimal pl-4 mb-2 space-y-1" {...props} />,
+                            li: ({node, ...props}) => <li className="" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-semibold text-white" {...props} />,
+                            a: ({node, ...props}) => <a className="text-violet-400 hover:underline" {...props} />,
+                            h1: ({node, ...props}) => <h1 className="text-lg font-bold text-white mb-2 mt-3 first:mt-0" {...props} />,
+                            h2: ({node, ...props}) => <h2 className="text-base font-bold text-white mb-2 mt-3 first:mt-0" {...props} />,
+                            h3: ({node, ...props}) => <h3 className="text-[14px] font-bold text-white mb-1 mt-2 first:mt-0" {...props} />,
+                            code: ({node, inline, ...props}: any) => 
+                              inline ? (
+                                <code className="bg-black/30 px-1.5 py-0.5 rounded text-[12px] font-mono text-violet-300" {...props} />
+                              ) : (
+                                <code className="block bg-black/50 p-2.5 rounded-lg text-[12px] font-mono text-violet-300 overflow-x-auto mb-2" {...props} />
+                              )
+                          }}
+                        >
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    )}
                   </div>
                 ))}
                 {isChatLoading && (

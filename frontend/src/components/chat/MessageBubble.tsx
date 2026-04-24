@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { Bot, User, Volume2, VolumeX, Copy, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface MessageBubbleProps {
   message: { id: string; role: "user" | "assistant"; content: string; sources?: any[]; created_at: string };
@@ -47,7 +49,34 @@ export function MessageBubble({ message, onSourceClick, onSpeak, isSpeaking, onS
               : "bg-white/[0.04] border border-white/[0.06] text-[#e5e5ea] rounded-bl-sm"
           )}
         >
-          <div className="whitespace-pre-wrap">{message.content}</div>
+          {isUser ? (
+            <div className="whitespace-pre-wrap">{message.content}</div>
+          ) : (
+            <div className="text-[13px] leading-relaxed">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal pl-4 mb-2 space-y-1" {...props} />,
+                  li: ({node, ...props}) => <li className="" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-semibold text-white" {...props} />,
+                  a: ({node, ...props}) => <a className="text-violet-400 hover:underline" {...props} />,
+                  h1: ({node, ...props}) => <h1 className="text-lg font-bold text-white mb-2 mt-3 first:mt-0" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-base font-bold text-white mb-2 mt-3 first:mt-0" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-[14px] font-bold text-white mb-1 mt-2 first:mt-0" {...props} />,
+                  code: ({node, inline, ...props}: any) => 
+                    inline ? (
+                      <code className="bg-black/30 px-1.5 py-0.5 rounded text-[12px] font-mono text-violet-300" {...props} />
+                    ) : (
+                      <code className="block bg-black/50 p-2.5 rounded-lg text-[12px] font-mono text-violet-300 overflow-x-auto mb-2" {...props} />
+                    )
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
+            </div>
+          )}
         </div>
 
         {/* Action buttons for assistant messages */}
