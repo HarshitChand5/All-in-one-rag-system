@@ -50,10 +50,14 @@ app.mount("/api/files", StaticFiles(directory=UPLOAD_DIR), name="files")
 async def get_raw_document(doc_id: str, current_user: models.User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
     doc = db.query(models.Document).filter(models.Document.id == doc_id, models.Document.owner_id == current_user.id).first()
     if not doc:
+        logger.warning(f"Document {doc_id} not found for user {current_user.id}")
         raise HTTPException(status_code=404, detail="Document not found")
     
     file_path = os.path.join(UPLOAD_DIR, doc.file_name)
+    logger.info(f"Serving raw document {doc_id} from {file_path}")
+    
     if not os.path.exists(file_path):
+        logger.error(f"File binary not found at {file_path}")
         raise HTTPException(status_code=404, detail="File binary not found on server")
     
     from fastapi.responses import FileResponse

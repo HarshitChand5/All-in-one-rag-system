@@ -1,0 +1,21 @@
+{
+  "name": "docurag",
+  "version": "1.0.0",
+  "description": "DocuRAG Professional is an enterprise-grade web application bringing powerful Large Language Model (LLM) and Retrieval-Augmented Generation (RAG) capabilities to your personal and professional documents. By combining a robust Next.js frontend with an agile, LangChain-fueled FastAPI backend, users can upload PDFs and Images, ask intelligent questions across their content, dynamically assess resumes, and edit text with AI on the fly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarshitChand5/All-in-one-rag-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HarshitChand5/All-in-one-rag-system/issues"
+  },
+  "homepage": "https://github.com/HarshitChand5/All-in-one-rag-system#readme"
+}
