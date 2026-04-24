@@ -170,14 +170,19 @@ export default function PDFEditorPage() {
       const data = new Uint8Array(arrayBuffer);
       setPdfData(data);
       
-      const pdf = await pdfjsLib.getDocument({ data }).promise;
+      const pdf = await pdfjsLib.getDocument({ 
+        data,
+        isEvalSupported: false // Recommended for Next.js CSP and environments
+      }).promise;
       pdfDocRef.current = pdf;
+      console.log(`PDF Loaded: ${pdf.numPages} pages`);
       setNumPages(pdf.numPages);
       setLoading(false);
     } catch (error) {
       console.error("Fetch PDF Error:", error);
-      toast.error("Error loading document");
-      router.push("/documents");
+      toast.error("Error loading document. Please try again.");
+      // router.push("/documents"); // Removed auto-redirect for better debugging
+      setLoading(false);
     }
   }, [id, router]);
 
@@ -185,7 +190,8 @@ export default function PDFEditorPage() {
     const initAndFetch = async () => {
       try {
         const pdfjsLib = await import("pdfjs-dist");
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+        // Use local worker copied to /public
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
         setPdfjs(pdfjsLib);
         if (id && id !== "undefined") {
           await fetchPdf(pdfjsLib);
